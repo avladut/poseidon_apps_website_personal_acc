@@ -58,7 +58,7 @@ class CtaSection extends StatelessWidget {
           const Reveal(
             delay: Duration(milliseconds: 320),
             child: Text(
-              'Prefer email? hello@poseidonapps.net',
+              'Prefer email? alex@poseidonapps.net',
               style: TextStyle(
                 fontSize: 13,
                 color: AppColors.muted,

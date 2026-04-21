@@ -50,7 +50,7 @@ class FooterSection extends StatelessWidget {
               _FooterLink(
                 'Contact',
                 () => launchUrl(
-                  Uri.parse('mailto:hello@poseidonapps.net'),
+                  Uri.parse('mailto:alex@poseidonapps.net'),
                 ),
               ),
             ],

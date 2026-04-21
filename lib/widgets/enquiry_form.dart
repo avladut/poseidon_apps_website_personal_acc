@@ -12,7 +12,7 @@ import 'primary_button.dart';
 /// with a prefilled message, so it still works before you wire up a backend.
 const String kFormspreeEndpoint = '';
 
-const String _contactEmail = 'hello@poseidonapps.net';
+const String _contactEmail = 'alex@poseidonapps.net';
 
 enum _FormStatus { idle, submitting, success, error }
 
