@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="description" content="Poseidon Apps builds professional websites, mobile apps, and automated workflows for forward-thinking businesses.">
+  <meta name="theme-color" content="#05080F">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="Poseidon Apps">
+
+  <meta property="og:title" content="Poseidon Apps — Websites, Mobile Apps & Workflow Automation">
+  <meta property="og:description" content="Independent studio building software for founders and operators who want results, not overhead.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://poseidonapps.net">
+  <meta property="og:site_name" content="Poseidon Apps">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Poseidon Apps">
+  <meta name="twitter:description" content="Websites, mobile apps, and workflow automation.">
+
+  <base href="$FLUTTER_BASE_HREF">
+
+  <title>Poseidon Apps — Websites, Mobile Apps & Workflow Automation</title>
+  <link rel="manifest" href="manifest.json">
+
+  <style>
+    html, body { margin: 0; padding: 0; background: #05080F; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
+    #splash {
+      position: fixed; inset: 0; display: flex;
+      align-items: center; justify-content: center;
+      background: #05080F; z-index: 9999;
+      transition: opacity 0.5s ease;
+    }
+    #splash.hidden { opacity: 0; pointer-events: none; }
+    #splash .mark {
+      width: 48px; height: 48px; border-radius: 14px;
+      background: linear-gradient(135deg, rgba(126,232,250,0.22), rgba(159,122,234,0.22));
+      border: 1px solid rgba(255,255,255,0.12);
+      display: grid; place-items: center;
+      animation: float 2.4s ease-in-out infinite;
+    }
+    #splash .dot {
+      width: 12px; height: 12px; border-radius: 50%;
+      background: linear-gradient(135deg, #7EE8FA, #9F7AEA);
+      box-shadow: 0 0 24px rgba(126,232,250,0.55);
+    }
+    @keyframes float {
+      0%,100% { transform: translateY(0); }
+      50% { transform: translateY(-6px); }
+    }
+  </style>
+</head>
+<body>
+  <div id="splash"><div class="mark"><div class="dot"></div></div></div>
+  <script>
+    window.addEventListener('flutter-first-frame', function () {
+      var el = document.getElementById('splash');
+      if (!el) return;
+      el.classList.add('hidden');
+      setTimeout(function () { el.remove(); }, 600);
+    });
+  </script>
+  <script src="flutter_bootstrap.js" async></script>
+</body>
+</html>

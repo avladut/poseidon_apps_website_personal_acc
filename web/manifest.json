@@ -1,0 +1,12 @@
+{
+  "name": "Poseidon Apps",
+  "short_name": "Poseidon Apps",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#05080F",
+  "theme_color": "#05080F",
+  "description": "Websites, mobile apps, and workflow automation.",
+  "orientation": "portrait-primary",
+  "prefer_related_applications": false,
+  "icons": []
+}
