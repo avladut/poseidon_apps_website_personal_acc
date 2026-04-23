@@ -10,7 +10,8 @@ import 'primary_button.dart';
 /// (sign up at https://formspree.io — free tier is 50 submissions/month).
 /// When empty, the form falls back to opening the visitor's email client
 /// with a prefilled message, so it still works before you wire up a backend.
-const String kFormspreeEndpoint = 'https://formspree.io/f/xaqaljpo';
+// const String kFormspreeEndpoint = 'https://formspree.io/f/xaqaljpo';
+const String kFormspreeEndpoint = '';
 
 const String _contactEmail = 'alex@poseidonapps.net';
 
