@@ -10,8 +10,8 @@
 <link rel="icon" type="image/png" href="/favicon.png">
 <style>
   :root {
-    --bg-top: #00182f;    /* sampled from the poster's top and side edges */
-    --bg-bottom: #00213d; /* and its brighter bottom edge */
+    --bg-top: #00182f;    /* sampled from the posters' top and side edges */
+    --bg-bottom: #00213d; /* and their brighter bottom edges */
     --muted: #aab3c8;
     --accent: #7ee8fa;
   }
@@ -24,53 +24,177 @@
     align-items: center;
     background: linear-gradient(var(--bg-top), var(--bg-bottom));
     font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+    color: var(--muted);
   }
+
+  /* The two-page poster. Full width on phones; on wider screens the whole
+     poster fits in the window, with the page dots and contact line below. */
   .poster {
-    position: relative;
-    /* Full width on phones; on wider screens, the whole poster fits in the window with the contact line below. */
-    width: min(100vw, 1024px, calc((100svh - 64px) * 1024 / 1536));
+    width: min(100vw, 1024px, calc((100svh - 108px) * 1024 / 1536));
+    aspect-ratio: 1024 / 1536;
+    perspective: 2400px;
+    cursor: pointer;
+    touch-action: pan-y; /* sideways swipes turn the page; up and down still scrolls */
+    -webkit-tap-highlight-color: transparent;
   }
-  .poster img {
+  .card {
+    position: relative;
+    height: 100%;
+    transform-style: preserve-3d;
+    transition: transform .8s cubic-bezier(.2, .75, .25, 1);
+  }
+  .poster.flipped .card { transform: rotateY(180deg); }
+  .poster.peek .card { transform: rotateY(-16deg); transition-duration: .45s; }
+  .face {
+    position: absolute;
+    inset: 0;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+  }
+  .front { --fade-from: 93%; }
+  .back { --fade-from: 95%; transform: rotateY(180deg); } /* page 2's web address sits lower */
+  .face img {
     display: block;
     width: 100%;
-    height: auto;
-    /* Fade the poster's bottom waves (below the button) into the page, so there's no hard edge. */
-    -webkit-mask-image: linear-gradient(#000 93%, transparent);
-    mask-image: linear-gradient(#000 93%, transparent);
+    height: 100%;
+    /* Fade each page's bottom waves into the background, so there's no hard edge. */
+    -webkit-mask-image: linear-gradient(#000 var(--fade-from), transparent);
+    mask-image: linear-gradient(#000 var(--fade-from), transparent);
   }
-  /* Sits exactly on the poster's "Got a problem or an idea?" button
-     (x 140-878, y 1247-1378 of the 1024 x 1536 image), so it scales with it. */
-  .cta {
+
+  /* Links laid exactly over the buttons drawn in the poster images, in % of
+     the 1024 x 1536 image, so they scale with it. */
+  .hotspot {
     position: absolute;
-    left: 13.67%;
-    top: 81.18%;
-    width: 72.07%;
-    height: 8.53%;
     border-radius: 999px;
     transition: box-shadow .2s, background-color .2s;
     -webkit-tap-highlight-color: rgba(126, 232, 250, .25);
   }
-  .cta:hover { background-color: rgba(126, 232, 250, .08); box-shadow: 0 0 28px rgba(126, 232, 250, .45); }
-  .cta:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+  .hotspot:hover { background-color: rgba(126, 232, 250, .08); box-shadow: 0 0 28px rgba(126, 232, 250, .45); }
+  .hotspot:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+  .cta-1 { left: 13.67%; top: 81.18%; width: 72.07%; height: 8.53%; }  /* x 140-878, y 1247-1378 */
+  .cta-2 { left: 11.91%; top: 83.53%; width: 76.17%; height: 5.86%; }  /* x 122-902, y 1283-1373 */
+  .site-2 { left: 27.83%; top: 90.36%; width: 43.46%; height: 3.78%; } /* x 285-730, y 1388-1446 */
+
+  .pager {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding-top: 12px;
+    font-size: 13px;
+  }
+  .pager button {
+    width: 28px; /* a comfortable tap target around a small dot */
+    height: 28px;
+    padding: 0;
+    border: 0;
+    background: none;
+    cursor: pointer;
+  }
+  .pager button::before {
+    content: "";
+    display: block;
+    width: 8px;
+    height: 8px;
+    margin: auto;
+    border-radius: 50%;
+    background: rgba(170, 179, 200, .45);
+    transition: background-color .2s, transform .2s;
+  }
+  .pager button[aria-current="true"]::before { background: var(--accent); transform: scale(1.25); }
+  .pager button:focus-visible { outline: 2px solid var(--accent); border-radius: 50%; }
+  .pager span { margin-left: 6px; }
+
   footer {
-    padding: 18px 16px calc(18px + env(safe-area-inset-bottom));
+    padding: 10px 16px calc(18px + env(safe-area-inset-bottom));
     text-align: center;
     font-size: 15px;
     line-height: 1.6;
-    color: var(--muted);
   }
   a { color: var(--accent); text-decoration: none; }
-  a:hover { text-decoration: underline; }
+  footer a:hover { text-decoration: underline; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .card { transition: none; }
+  }
 </style>
 </head>
 <body>
-  <div class="poster">
-    <img src="/posters/idea.webp" width="1024" height="1536"
-         alt="Poseidon Apps poster: &ldquo;There should be an app for that.&rdquo; I can build it. Custom apps and business tools that solve problems, bring everything together and make life simpler: your own custom app for mobile and desktop, everything in one place, systems that work together, tracking what matters, less repetitive work, built around your business.">
-    <a class="cta" href="/enquire" aria-label="Got a problem or an idea? Let&rsquo;s make it happen: open the enquiry form"></a>
+  <div class="poster" id="poster" role="group" aria-label="Poster with 2 pages. Tap it to turn the page.">
+    <div class="card">
+      <div class="face front">
+        <img src="/posters/idea.webp" width="1024" height="1536"
+             alt="Poseidon Apps poster: &ldquo;There should be an app for that.&rdquo; I can build it. Custom apps and business tools that solve problems, bring everything together and make life simpler: your own custom app for mobile and desktop, everything in one place, systems that work together, tracking what matters, less repetitive work, built around your business.">
+        <a class="hotspot cta-1" href="/enquire" aria-label="Got a problem or an idea? Let&rsquo;s make it happen: open the enquiry form"></a>
+      </div>
+      <div class="face back" inert>
+        <img src="/posters/idea-2.webp" width="1024" height="1536"
+             alt="Poseidon Apps poster, page 2: Sound familiar? You don&rsquo;t need to know anything about technology to know when something isn&rsquo;t working. Too many spreadsheets? Bring everything into one organised place. Doing the same tasks every day? Let your software handle the repetitive work. Your systems don&rsquo;t talk? Connect the tools you already use. Have an idea nobody&rsquo;s built? Let&rsquo;s turn it into something real. What&rsquo;s making your work harder than it needs to be?">
+        <a class="hotspot cta-2" href="/enquire" aria-label="Let&rsquo;s see what we can do about it: open the enquiry form"></a>
+        <a class="hotspot site-2" href="/" aria-label="poseidonapps.net"></a>
+      </div>
+    </div>
+  </div>
+  <div class="pager">
+    <button type="button" aria-label="Page 1" aria-current="true"></button>
+    <button type="button" aria-label="Page 2" aria-current="false"></button>
+    <span>Tap the poster to turn the page</span>
   </div>
   <footer>
     <a href="mailto:alex@poseidonapps.net">alex@poseidonapps.net</a> · <a href="/">poseidonapps.net</a>
   </footer>
+
+<script>
+  const poster = document.getElementById('poster');
+  const faces = poster.querySelectorAll('.face');
+  const dots = document.querySelectorAll('.pager button');
+  let page = 0;
+
+  function show(next) {
+    page = next;
+    poster.classList.remove('peek');
+    poster.classList.toggle('flipped', page === 1);
+    faces.forEach((face, i) => { face.inert = i !== page; }); // the side facing away can't be tapped or tabbed to
+    dots.forEach((dot, i) => dot.setAttribute('aria-current', String(i === page)));
+  }
+  const turn = () => show(1 - page);
+
+  // Tap the poster anywhere except its buttons to turn the page.
+  let swiped = false;
+  poster.addEventListener('click', e => {
+    if (swiped) {
+      swiped = false;
+      e.preventDefault(); // a swipe that ends on a button shouldn't also follow its link
+      return;
+    }
+    if (!e.target.closest('a')) turn();
+  });
+
+  // A sideways swipe turns it too.
+  let startX = 0, startY = 0;
+  poster.addEventListener('pointerdown', e => { startX = e.clientX; startY = e.clientY; swiped = false; });
+  poster.addEventListener('pointerup', e => {
+    const dx = e.clientX - startX, dy = e.clientY - startY;
+    if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)) {
+      swiped = true;
+      turn();
+    }
+  });
+
+  dots.forEach((dot, i) => dot.addEventListener('click', () => show(i)));
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight') show(1);
+    if (e.key === 'ArrowLeft') show(0);
+  });
+
+  // A small tilt after a moment, so people notice there's a second page.
+  if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    setTimeout(() => {
+      if (page !== 0) return;
+      poster.classList.add('peek');
+      setTimeout(() => poster.classList.remove('peek'), 450);
+    }, 1800);
+  }
+</script>
 </body>
 </html>
