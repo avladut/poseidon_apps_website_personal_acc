@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<!-- Only reached through the poster's QR code: nothing on the site links here, and search engines are asked not to list it. -->
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#00182f">
+<title>Poseidon Apps · I can build it</title>
+<link rel="icon" type="image/png" href="/favicon.png">
+<style>
+  :root {
+    --bg-top: #00182f;    /* sampled from the poster's top and side edges */
+    --bg-bottom: #00213d; /* and its brighter bottom edge */
+    --muted: #aab3c8;
+    --accent: #7ee8fa;
+  }
+  html { background: var(--bg-bottom); }
+  body {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: linear-gradient(var(--bg-top), var(--bg-bottom));
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  }
+  img {
+    display: block;
+    /* Full width on phones; on wider screens, the whole poster fits in the window with the contact line below. */
+    width: min(100vw, 1024px, calc((100svh - 64px) * 1024 / 1536));
+    height: auto;
+    /* Fade the poster's bottom waves (below the button) into the page, so there's no hard edge. */
+    -webkit-mask-image: linear-gradient(#000 93%, transparent);
+    mask-image: linear-gradient(#000 93%, transparent);
+  }
+  footer {
+    padding: 18px 16px calc(18px + env(safe-area-inset-bottom));
+    text-align: center;
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--muted);
+  }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+  <img src="/posters/idea.webp" width="1024" height="1536"
+       alt="Poseidon Apps poster: &ldquo;There should be an app for that.&rdquo; I can build it. Custom apps and business tools that solve problems, bring everything together and make life simpler: your own custom app for mobile and desktop, everything in one place, systems that work together, tracking what matters, less repetitive work, built around your business. Got a problem or an idea? Let&rsquo;s make it happen.">
+  <footer>
+    <a href="mailto:alex@poseidonapps.net">alex@poseidonapps.net</a> · <a href="/">poseidonapps.net</a>
+  </footer>
+</body>
+</html>
