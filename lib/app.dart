@@ -13,7 +13,7 @@ class PoseidonApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: AppTheme.darkTheme,
       scrollBehavior: const _AppScrollBehavior(),
-      home: const HomeScreen(),
+      home: HomeScreen(openAtEnquiry: Uri.base.path == '/enquire'),
     );
   }
 }

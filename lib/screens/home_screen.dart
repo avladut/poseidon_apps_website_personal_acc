@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:google_fonts/google_fonts.dart';
 import '../sections/about_section.dart';
 import '../sections/approach_section.dart';
 import '../sections/cta_section.dart';
@@ -11,7 +12,10 @@ import '../widgets/nav_bar.dart';
 const double _navHeight = 76;
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  /// Opens scrolled to the enquiry form, for poseidonapps.net/enquire (the poster's button).
+  final bool openAtEnquiry;
+
+  const HomeScreen({super.key, this.openAtEnquiry = false});
 
   @override
   State<HomeScreen> createState() => _HomeScreenState();
@@ -38,6 +42,20 @@ class _HomeScreenState extends State<HomeScreen> {
       duration: const Duration(milliseconds: 700),
       curve: Curves.easeInOutCubic,
     );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.openAtEnquiry) _openAtEnquiry();
+  }
+
+  // Waits for the web fonts first: they change text heights, so scrolling
+  // any earlier would stop short of the form.
+  Future<void> _openAtEnquiry() async {
+    await GoogleFonts.pendingFonts();
+    await WidgetsBinding.instance.endOfFrame;
+    if (mounted) _scrollTo(_contactKey);
   }
 
   @override

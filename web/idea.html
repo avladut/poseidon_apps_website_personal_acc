@@ -25,15 +25,33 @@
     background: linear-gradient(var(--bg-top), var(--bg-bottom));
     font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
   }
-  img {
-    display: block;
+  .poster {
+    position: relative;
     /* Full width on phones; on wider screens, the whole poster fits in the window with the contact line below. */
     width: min(100vw, 1024px, calc((100svh - 64px) * 1024 / 1536));
+  }
+  .poster img {
+    display: block;
+    width: 100%;
     height: auto;
     /* Fade the poster's bottom waves (below the button) into the page, so there's no hard edge. */
     -webkit-mask-image: linear-gradient(#000 93%, transparent);
     mask-image: linear-gradient(#000 93%, transparent);
   }
+  /* Sits exactly on the poster's "Got a problem or an idea?" button
+     (x 140-878, y 1247-1378 of the 1024 x 1536 image), so it scales with it. */
+  .cta {
+    position: absolute;
+    left: 13.67%;
+    top: 81.18%;
+    width: 72.07%;
+    height: 8.53%;
+    border-radius: 999px;
+    transition: box-shadow .2s, background-color .2s;
+    -webkit-tap-highlight-color: rgba(126, 232, 250, .25);
+  }
+  .cta:hover { background-color: rgba(126, 232, 250, .08); box-shadow: 0 0 28px rgba(126, 232, 250, .45); }
+  .cta:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
   footer {
     padding: 18px 16px calc(18px + env(safe-area-inset-bottom));
     text-align: center;
@@ -46,8 +64,11 @@
 </style>
 </head>
 <body>
-  <img src="/posters/idea.webp" width="1024" height="1536"
-       alt="Poseidon Apps poster: &ldquo;There should be an app for that.&rdquo; I can build it. Custom apps and business tools that solve problems, bring everything together and make life simpler: your own custom app for mobile and desktop, everything in one place, systems that work together, tracking what matters, less repetitive work, built around your business. Got a problem or an idea? Let&rsquo;s make it happen.">
+  <div class="poster">
+    <img src="/posters/idea.webp" width="1024" height="1536"
+         alt="Poseidon Apps poster: &ldquo;There should be an app for that.&rdquo; I can build it. Custom apps and business tools that solve problems, bring everything together and make life simpler: your own custom app for mobile and desktop, everything in one place, systems that work together, tracking what matters, less repetitive work, built around your business.">
+    <a class="cta" href="/enquire" aria-label="Got a problem or an idea? Let&rsquo;s make it happen: open the enquiry form"></a>
+  </div>
   <footer>
     <a href="mailto:alex@poseidonapps.net">alex@poseidonapps.net</a> · <a href="/">poseidonapps.net</a>
   </footer>
