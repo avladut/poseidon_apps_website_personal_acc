@@ -10,7 +10,7 @@ class BrandLogo extends StatelessWidget {
   Widget build(BuildContext context) {
     final height = showText ? size * 1.4 : size;
     return Image.asset(
-      'assets/logo.png',
+      'assets/brand_logo.png',
       height: height,
       fit: BoxFit.contain,
       filterQuality: FilterQuality.high,

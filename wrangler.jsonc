@@ -1,0 +1,16 @@
+// Cloudflare Worker that serves poseidonapps.net (moved here from Azure Static Web Apps on 2026-09-11).
+// Deploy from this folder: flutter build web --release, then wrangler deploy.
+{
+  "name": "poseidonapps",
+  "account_id": "f6da4b3c0682a5dc2810f44e6dc026dc",
+  "compatibility_date": "2026-09-11",
+  "assets": {
+    "directory": "./build/web",
+    // Unknown paths such as /services get index.html, so the Flutter router handles them.
+    "not_found_handling": "single-page-application"
+  },
+  "routes": [
+    { "pattern": "poseidonapps.net", "custom_domain": true },
+    { "pattern": "www.poseidonapps.net", "custom_domain": true }
+  ]
+}

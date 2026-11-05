@@ -1,0 +1,5 @@
+# Cache rules for the Cloudflare Worker's static assets. Flutter copies web/ into build/web on every build.
+# Flutter doesn't put hashes in file names, so nothing here is cached as immutable: everything else gets
+# Cloudflare's default (public, max-age=0, must-revalidate), so browsers check for changes and pick up each deploy.
+/flutter_service_worker.js
+  Cache-Control: no-cache
